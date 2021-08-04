@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<div class="carousel-container">
+    <div class="carousel-slide">
+        <img src="10.jpg" alt="" id="lastClone">
+        <img src="1.jpg" alt="">
+        <img src="2.jpg" alt="">
+        <img src="3.jpg" alt="">
+        <img src="6.jpg" alt="">
+        <img src="7.jpg" alt="">
+        <img src="8.jpg" alt=""> 
+        <img src="9.jpg" alt="">
+        <img src="10.jpg" alt="">
+        <img src="1.jpg" alt="" id="firstClone">
+    </div>   
+    <i class="fas fa-arrow-left  prevArrow" ></i>
+<i class="fas fa-arrow-right nextArrow"></i>
+</div>
+
+<script>
+    const carouselSlide = document.querySelector('.carousel-slide');
+    const carouselImages = document.querySelectorAll('.carousel-slide img');
+
+//Buttons
+    
+    const nextBtn = document.querySelector('.nextArrow');
+    const prevBtn = document.querySelector('.prevArrow');
+
+   
+
+//Counter
+    
+    let counter = 1;
+    const size = carouselImages[0].clientWidth;
+    carouselSlide.style.transform = `translateX(${-size*counter}px)`
+
+//Button listeners
+ 
+    nextBtn.addEventListener('click',()=>{
+        
+        if(counter >= carouselImages.length - 1) return
+        carouselSlide.style.transition = '0.5s linear';
+        counter++;
+        carouselSlide.style.transform = `translateX(${-size*counter}px)`
+
+    });
+    prevBtn.addEventListener('click',()=>{
+        if(counter <= 0) return
+        carouselSlide.style.transition = '0.5s linear';
+        counter--;
+        carouselSlide.style.transform = `translateX(${-size*counter}px)`
+
+    })
+    carouselSlide.addEventListener('transitionend',()=>{
+        if(carouselImages[counter].id == 'lastClone'){
+            carouselSlide.style.transition = "none";
+            counter= carouselImages.length-2;
+            carouselSlide.style.transform = `translateX(${-size*counter}px)`
+        }
+        if(carouselImages[counter].id == 'firstClone'){
+            carouselSlide.style.transition = "none";
+            counter= carouselImages.length-counter;
+            carouselSlide.style.transform = `translateX(${-size*counter}px)`
+        }
+    });
+    // Zamanlama
+setInterval(()=>{
+    if(counter >= carouselImages.length - 1) return
+    if(counter <= 0) return
+        carouselSlide.style.transition = '0.5s linear';
+        counter++;
+        carouselSlide.style.transform = `translateX(${-size*counter}px)`
+},6000)
+
+    
+</script>
+
+</body>
+</html>
